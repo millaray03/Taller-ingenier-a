@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS resenas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo_libro VARCHAR(255) NOT NULL,
+    autor VARCHAR(255) NOT NULL,
+    calificacion INT NOT NULL,
+    comentario TEXT NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
