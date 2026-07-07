@@ -2,8 +2,8 @@
 // Configuración de la conexión local para GitHub Codespaces
 $host = '127.0.0.1'; 
 $db   = 'biblioteca_db'; 
-$user = 'root'; 
-$pass = '';     
+$user = 'admin'; 
+$pass = '1234';     
 $charset = 'utf8mb4';
 
 // 1. Conexión inicial al servidor MySQL (para asegurar que exista la BD)
