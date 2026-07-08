@@ -1,13 +1,15 @@
 {
-    "name": "Proyecto PHP y MySQL",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "app",
-    "workspaceFolder": "/workspace",
-    "forwardPorts": [3000, 3306],
-    "portsAttributes": {
-        "3000": {
-            "label": "Servidor PHP",
-            "onAutoForward": "openPreview"
-        }
+  "name": "Taller Ingenieria PHP & MySQL",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "db",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "bmewburn.vscode-intelephense-client"
+      ]
     }
+  },
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y php-mysql php-pdo-mysql"
 }

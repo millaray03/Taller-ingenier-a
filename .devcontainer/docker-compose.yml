@@ -1,26 +1,19 @@
 version: '3.8'
 
 services:
-  app:
-    image: mcr.microsoft.com/devcontainers/universal:2
-    volumes:
-      - ..:/workspace:cached
-    network_mode: service:db
-    depends_on:
-      - db
-    postCreateCommand: "sudo apt-get update && sudo apt-get install -y php php-mysql"
-
   db:
     image: mysql:8.0
+    container_name: taller_mysql_db
     restart: always
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_USER: "admin"
       MYSQL_PASSWORD: "1234"
       MYSQL_DATABASE: "biblioteca_db"
+    ports:
+      - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      # Esto carga tu archivo SQL automáticamente al iniciar:
       - ../init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
