@@ -1,3 +1,11 @@
+<?php
+session_start();
+// Si el usuario no ha iniciado sesión, lo mandamos directo al login
+if (!isset($_SESSION['usuario_name'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -466,6 +474,7 @@
             <a href="index.php?section=read" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'read') ? 'active' : ''; ?>">📖 Ver <span class="badge read">R</span></a>
             <a href="index.php?section=update" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'update') ? 'active' : ''; ?>">✏️ Editar <span class="badge update">U</span></a>
             <a href="index.php?section=delete" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'delete') ? 'active' : ''; ?>">🗑️ Eliminar <span class="badge delete">D</span></a>
+            <a href="logout.php" style="background-color: #c62828; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-left: 10px; font-size: 0.9em; display: inline-block;">Cerrar Sesion</a>
         </div>
     </nav>
 

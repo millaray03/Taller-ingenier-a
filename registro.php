@@ -23,8 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mensaje = "¡Usuario registrado con éxito! Ya puedes iniciar sesión.";
             $tipo_mensaje = "success";
         } catch (PDOException $e) {
-            $mensaje = "Error: El nombre de usuario ya está registrado.";
-            $tipo_mensaje = "error";
+    // Cambia temporalmente tu mensaje por este para ver el error real:
+    $mensaje = "Error real de la Base de Datos: " . $e->getMessage();
+    $tipo_mensaje = "error";
         }
     } else {
         $mensaje = "Por favor, llena todos los campos.";
