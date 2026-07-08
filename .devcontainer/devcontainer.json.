@@ -1,0 +1,13 @@
+{
+    "name": "Proyecto PHP y MySQL",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    "forwardPorts": [3000, 3306],
+    "portsAttributes": {
+        "3000": {
+            "label": "Servidor PHP",
+            "onAutoForward": "openPreview"
+        }
+    }
+}
