@@ -1,6 +1,6 @@
 <?php
 // Configuración de la conexión
-$host = 'db'; 
+$host = '127.0.0.1'; 
 $db   = 'biblioteca_db'; 
 $user = 'admin'; 
 $pass = '1234';     

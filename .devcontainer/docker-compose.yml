@@ -1,6 +1,21 @@
-version: '3.8'
-
 services:
+  web:
+    image: php:8.3-apache
+    container_name: taller_php_web
+    restart: always
+    ports:
+      - "3000:80"
+    volumes:
+      - ..:/var/www/html       # <-- Asegúrate de que diga exactamente esto
+    depends_on:
+      - db
+    entrypoint:
+      - sh
+      - -c
+      - |
+        docker-php-ext-install pdo pdo_mysql
+        apache2-foreground
+
   db:
     image: mysql:8.0
     container_name: taller_mysql_db
@@ -14,7 +29,6 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      - ../init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   mysql-data:
