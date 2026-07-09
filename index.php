@@ -470,10 +470,10 @@ if (!isset($_SESSION['usuario_name'])) {
         <a href="index.php" class="navbar-brand">📚 <span>Biblioteca</span> de Reseñas</a>
         <div class="navbar-menu">
             <a href="index.php?section=presentacion" class="navbar-item <?php echo (!isset($_GET['section']) || $_GET['section'] == 'presentacion') ? 'active' : ''; ?>">📄 Presentación</a>
-            <a href="index.php?section=create" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'create') ? 'active' : ''; ?>">➕ Crear <span class="badge create">C</span></a>
-            <a href="index.php?section=read" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'read') ? 'active' : ''; ?>">📖 Ver <span class="badge read">R</span></a>
-            <a href="index.php?section=update" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'update') ? 'active' : ''; ?>">✏️ Editar <span class="badge update">U</span></a>
-            <a href="index.php?section=delete" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'delete') ? 'active' : ''; ?>">🗑️ Eliminar <span class="badge delete">D</span></a>
+            <a href="index.php?section=create" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'create') ? 'active' : ''; ?>">➕ Crear</a>
+            <a href="index.php?section=read" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'read') ? 'active' : ''; ?>">📖 Ver</a>
+            <a href="index.php?section=update" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'update') ? 'active' : ''; ?>">✏️ Editar</a>
+            <a href="index.php?section=delete" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'delete') ? 'active' : ''; ?>">🗑️ Eliminar</a>
             <a href="index.php?section=bitacora" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'bitacora') ? 'active' : ''; ?>">🗒️ Bitácora</a>
             <a href="logout.php" style="background-color: #c62828; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-left: 10px; font-size: 0.9em; display: inline-block;">Cerrar Sesion</a>
         </div>
@@ -491,7 +491,7 @@ if (!isset($_SESSION['usuario_name'])) {
             case 'presentacion':
                 // SECCIÓN DE PRESENTACIÓN
                 ?>
-                <h1>📚 Biblioteca de Reseñas de Libros</h1>
+                <h1>Biblioteca de Reseñas de Libros</h1>
                 <div class="subtitle">Comparte tu pasión por la lectura — reseñas, calificaciones y recomendaciones</div>
 
                 <div class="integrantes">
@@ -504,7 +504,7 @@ if (!isset($_SESSION['usuario_name'])) {
                 </div>
 
                 <div style="background:rgba(255,248,240,0.85);padding:25px 30px;border-radius:20px;margin-bottom:30px;box-shadow:0 8px 32px rgba(107,66,38,0.12);border:1px solid rgba(255,215,175,0.3);">
-                    <h3 style="color:#6b4226;margin-bottom:15px;">📖 Descripción de la Aplicación</h3>
+                    <h3 style="color:#6b4226;margin-bottom:15px;"> Descripción de la Aplicación</h3>
                     <p style="line-height:1.8;color:#5a4a3a;">
                         <strong>Biblioteca de Reseñas de Libros</strong> es una aplicación web que permite a los usuarios
                         registrar y gestionar reseñas de libros. Por cada libro se almacena el título, el nombre del autor,
@@ -569,7 +569,7 @@ if (!isset($_SESSION['usuario_name'])) {
                 </div>
 
                 <div style="background:rgba(255,248,240,0.85);padding:25px 30px;border-radius:20px;margin-top:30px;box-shadow:0 8px 32px rgba(107,66,38,0.12);border:1px solid rgba(255,215,175,0.3);">
-                    <h3 style="color:#6b4226;margin-bottom:15px;">🖥️ Interfaz de la Aplicación Web</h3>
+                    <h3 style="color:#6b4226;margin-bottom:15px;">Interfaz de la Aplicación Web</h3>
                     <p style="color:#5a4a3a;margin-bottom:15px;">
                         A continuación se muestra la interfaz principal de la aplicación web
                         Biblioteca de Reseñas de Libros.
@@ -608,11 +608,11 @@ if (!isset($_SESSION['usuario_name'])) {
                         <input type="hidden" name="action" value="create">
                         
                         <div class="form-group">
-                            <label>📖 Título del Libro</label>
+                            <label>Título del Libro</label>
                             <input type="text" name="titulo_libro" placeholder="Ej: Don Quijote de la Mancha" required>
                         </div>
                         <div class="form-group">
-                            <label>✍️ Autor</label>
+                            <label>Autor</label>
                             <input type="text" name="autor" placeholder="Ej: Miguel de Cervantes" required>
                         </div>
                         <div class="form-group">
@@ -642,7 +642,7 @@ if (!isset($_SESSION['usuario_name'])) {
             case 'read':
                 // LISTA DE RESEÑAS
                 ?>
-                <h1>📖 Lista de Reseñas</h1>
+                <h1>Lista de Reseñas</h1>
                 <div class="subtitle">Todas las reseñas registradas en la biblioteca</div>
                 
                 <?php if (isset($_GET['deleted']) && $_GET['deleted'] == 1): ?>
@@ -753,7 +753,7 @@ if (!isset($_SESSION['usuario_name'])) {
                     break;
                 }
                 ?>
-                <h1>✏️ Editar Reseña</h1>
+                <h1>Editar Reseña</h1>
                 <div class="subtitle">Modifica los datos de la reseña seleccionada</div>
                 
                 <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
@@ -766,11 +766,11 @@ if (!isset($_SESSION['usuario_name'])) {
                         <input type="hidden" name="id" value="<?php echo $resena['id']; ?>">
                         
                         <div class="form-group">
-                            <label>📖 Título del Libro</label>
+                            <label>Título del Libro</label>
                             <input type="text" name="titulo_libro" value="<?php echo htmlspecialchars($resena['titulo_libro']); ?>" required>
                         </div>
                         <div class="form-group">
-                            <label>✍️ Autor</label>
+                            <label>Autor</label>
                             <input type="text" name="autor" value="<?php echo htmlspecialchars($resena['autor']); ?>" required>
                         </div>
                         <div class="form-group">
@@ -800,7 +800,7 @@ if (!isset($_SESSION['usuario_name'])) {
             case 'bitacora':
                 // BITÁCORA DE EVENTOS DEL SISTEMA
                 ?>
-                <h1>🗒️ Bitácora de Eventos</h1>
+                <h1>Bitácora de Eventos</h1>
                 <div class="subtitle">Registro histórico de todas las acciones realizadas en el sistema</div>
 
                 <div class="table-wrapper">
@@ -898,8 +898,8 @@ if (!isset($_SESSION['usuario_name'])) {
                         <div style="color:#8b6b50;margin-bottom:20px;">¿Estás seguro de que deseas eliminar esta reseña?</div>
                         
                         <div class="book-info">
-                            <p><strong>📖 Título:</strong> <?php echo htmlspecialchars($resena['titulo_libro']); ?></p>
-                            <p><strong>✍️ Autor:</strong> <?php echo htmlspecialchars($resena['autor']); ?></p>
+                            <p><strong>Título:</strong> <?php echo htmlspecialchars($resena['titulo_libro']); ?></p>
+                            <p><strong>Autor:</strong> <?php echo htmlspecialchars($resena['autor']); ?></p>
                             <p><strong>⭐ Calificación:</strong> <?php echo str_repeat('⭐', $resena['calificacion']); ?></p>
                         </div>
                         
