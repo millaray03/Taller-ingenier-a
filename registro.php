@@ -157,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" name="username" placeholder="Nombre de usuario (sin espacios)" required>
             <div style="position: relative; width: 100%;">
     <input type="password" name="password" id="passwordRegistro" placeholder="Contraseña nueva" required style="width: 100%; padding-right: 40px; box-sizing: border-box;">
-    <button type="button" onclick="togglePasswordRegistro()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2em; width: auto; padding: 0; color: #795548;">👁️</button>
+    <button type="button" onclick="togglePasswordRegistro()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2em; width: auto; padding: 0; color: #795548;"></button>
 </div>
 
 <script>
