@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS resenas (
     autor VARCHAR(255) NOT NULL,
     calificacion INT NOT NULL,
     comentario TEXT NOT NULL,
+    creado_por VARCHAR(50) NOT NULL DEFAULT 'Anonimo',
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

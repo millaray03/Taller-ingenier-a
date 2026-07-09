@@ -686,8 +686,12 @@ if (!isset($_SESSION['usuario_name'])) {
                                         <td><?php echo date('d/m/Y', strtotime($r['fecha_creacion'])); ?></td>
                                         <td>
                                             <div class="action-buttons">
-                                                <a href="index.php?section=update&id=<?php echo $r['id']; ?>" class="btn btn-edit">✏️ Editar</a>
-                                                <a href="index.php?section=delete&id=<?php echo $r['id']; ?>" class="btn btn-delete">🗑️ Borrar</a>
+                                                <?php if ($r['creado_por'] === $_SESSION['usuario_name'] || $r['creado_por'] === 'Anonimo'): ?>
+                                                    <a href="index.php?section=update&id=<?php echo $r['id']; ?>" class="btn btn-edit">✏️ Editar</a>
+                                                    <a href="index.php?section=delete&id=<?php echo $r['id']; ?>" class="btn btn-delete">🗑️ Borrar</a>
+                                                <?php else: ?>
+                                                     <span style="color: #a68b78; font-size: 0.85rem; font-style: italic;">🔒 Solo lectura</span>
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -699,7 +703,7 @@ if (!isset($_SESSION['usuario_name'])) {
                 <?php
                 break;
                 
-            case 'update':
+        case 'update':
                 // FORMULARIO DE EDICIÓN
                 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
                 
@@ -727,6 +731,19 @@ if (!isset($_SESSION['usuario_name'])) {
                         <h2>Reseña no encontrada</h2>
                         <p>La reseña que intentas editar no existe o ha sido eliminada.</p>
                         <a href="index.php?section=read" class="btn-submit btn-primary">📖 Ir a la lista de reseñas</a>
+                    </div>
+                    <?php
+                    break;
+                }
+
+                // CANDADO DE SEGURIDAD PARA EDITAR
+                if ($resena['creado_por'] !== $_SESSION['usuario_name'] && $resena['creado_por'] !== 'Anonimo') {
+                    ?>
+                    <div class="redirect-message">
+                        <span class="icon">❌</span>
+                        <h2>Acceso Denegado</h2>
+                        <p>No tienes permisos para alterar esta reseña porque pertenece a otro usuario.</p>
+                        <a href="index.php?section=read" class="btn-submit btn-primary">📖 Volver a la lista de reseñas</a>
                     </div>
                     <?php
                     break;
@@ -808,6 +825,19 @@ if (!isset($_SESSION['usuario_name'])) {
                     <?php
                     break;
                 }
+
+                // CANDADO DE SEGURIDAD PARA ELIMINAR
+                if ($resena['creado_por'] !== $_SESSION['usuario_name'] && $resena['creado_por'] !== 'Anonimo') {
+                    ?>
+                    <div class="redirect-message">
+                        <span class="icon">❌</span>
+                        <h2>Acceso Denegado</h2>
+                        <p>No tienes permisos para alterar esta reseña porque pertenece a otro usuario.</p>
+                        <a href="index.php?section=read" class="btn-submit btn-primary">📖 Volver a la lista de reseñas</a>
+                    </div>
+                    <?php
+                    break;
+                }
                 ?>
                 <div style="max-width:600px;margin:0 auto;">
                     <div style="background:rgba(255,248,240,0.9);backdrop-filter:blur(10px);padding:35px 40px;border-radius:20px;box-shadow:0 8px 32px rgba(107,66,38,0.12);border:1px solid rgba(255,215,175,0.3);text-align:center;">
@@ -840,7 +870,6 @@ if (!isset($_SESSION['usuario_name'])) {
                 break;
         }
         ?>
-        
         <div class="footer">
             📚 Biblioteca de Reseñas &middot; 
         </div>
