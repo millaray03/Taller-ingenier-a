@@ -15,3 +15,13 @@ CREATE TABLE IF NOT EXISTS usuarios (
     password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Tabla de Log / Bitácora de eventos del sistema
+CREATE TABLE IF NOT EXISTS logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fecha_hora DATETIME NOT NULL,
+    nombre_usuario VARCHAR(50) NOT NULL,
+    tipo VARCHAR(50) NOT NULL,
+    detalle TEXT NOT NULL,
+    ip_host_cliente VARCHAR(100) NOT NULL
+);

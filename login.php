@@ -21,6 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Guardamos datos en la sesión para que el compañero del LOG sepa quién es
             $_SESSION['usuario_id'] = $usuario['id'];
             $_SESSION['usuario_name'] = $usuario['username'];
+
+            registrar_log($pdo, 'Inicio de sesión', "Usuario '" . $usuario['username'] . "' inició sesión");
             
             // Redireccionamos a tu página principal
             header("Location: index.php"); 

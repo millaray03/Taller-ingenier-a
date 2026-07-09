@@ -474,6 +474,7 @@ if (!isset($_SESSION['usuario_name'])) {
             <a href="index.php?section=read" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'read') ? 'active' : ''; ?>">📖 Ver <span class="badge read">R</span></a>
             <a href="index.php?section=update" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'update') ? 'active' : ''; ?>">✏️ Editar <span class="badge update">U</span></a>
             <a href="index.php?section=delete" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'delete') ? 'active' : ''; ?>">🗑️ Eliminar <span class="badge delete">D</span></a>
+            <a href="index.php?section=bitacora" class="navbar-item <?php echo (isset($_GET['section']) && $_GET['section'] == 'bitacora') ? 'active' : ''; ?>">🗒️ Bitácora</a>
             <a href="logout.php" style="background-color: #c62828; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-left: 10px; font-size: 0.9em; display: inline-block;">Cerrar Sesion</a>
         </div>
     </nav>
@@ -665,6 +666,9 @@ if (!isset($_SESSION['usuario_name'])) {
                             <?php 
                             $stmt = $pdo->query('SELECT * FROM resenas ORDER BY fecha_creacion DESC');
                             $resenas = $stmt->fetchAll();
+
+                            registrar_log($pdo, 'Consultar registro', "Tabla: resenas | Listado completo (" . count($resenas) . " registros)");
+
                             if (count($resenas) == 0): 
                             ?>
                                 <tr>
@@ -793,6 +797,54 @@ if (!isset($_SESSION['usuario_name'])) {
                 <?php
                 break;
                 
+            case 'bitacora':
+                // BITÁCORA DE EVENTOS DEL SISTEMA
+                ?>
+                <h1>🗒️ Bitácora de Eventos</h1>
+                <div class="subtitle">Registro histórico de todas las acciones realizadas en el sistema</div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha y Hora</th>
+                                <th>Usuario</th>
+                                <th>Tipo de Evento</th>
+                                <th>Detalle</th>
+                                <th>IP Cliente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $stmtLogs = $pdo->query('SELECT * FROM logs ORDER BY fecha_hora DESC LIMIT 200');
+                            $logs = $stmtLogs->fetchAll();
+                            if (count($logs) == 0):
+                            ?>
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="empty-message">
+                                            <span>📭</span>
+                                            Aún no hay eventos registrados en la bitácora.
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($logs as $log): ?>
+                                    <tr>
+                                        <td><?php echo date('d/m/Y, H:i:s', strtotime($log['fecha_hora'])); ?></td>
+                                        <td><strong><?php echo htmlspecialchars($log['nombre_usuario']); ?></strong></td>
+                                        <td><?php echo htmlspecialchars($log['tipo']); ?></td>
+                                        <td><?php echo htmlspecialchars($log['detalle']); ?></td>
+                                        <td><?php echo htmlspecialchars($log['ip_host_cliente']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php
+                break;
+
             case 'delete':
                 // CONFIRMACIÓN DE ELIMINACIÓN
                 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;

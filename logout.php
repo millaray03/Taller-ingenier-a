@@ -1,6 +1,11 @@
 <?php
 // logout.php
 session_start();
+require_once 'app.php';
+
+if(isset($_SESSION['usuario_name'])) {
+    registrar_log($pdo, 'Cierre de sesión', "Usuario '" . $_SESSION['usuario_name'] . "' cerró sesión");
+}
 
 // Borramos todas las variables de la sesión
 $_SESSION = array();

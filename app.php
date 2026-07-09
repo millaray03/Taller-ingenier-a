@@ -1,5 +1,7 @@
 <?php
 session_start();
+date_default_timezone_set('America/Santiago'); // Zona horaria correcta para los registros de la bitácora
+
 // Configuración de la conexión
 $host = '127.0.0.1'; 
 $db   = 'biblioteca_db'; 
@@ -40,6 +42,22 @@ try {
     exit;
 }
 
+// --- FUNCIÓN DE BITÁCORA (LOG) ---
+// Registra cualquier evento de la aplicación en la tabla 'logs'.
+// $tipo: Creación de usuario | Inicio de sesión | Cierre de sesión |
+//        Crear registro | Modificar registro | Eliminar registro | Consultar registro
+function registrar_log($pdo, $tipo, $detalle) {
+    try {
+        $usuario = $_SESSION['usuario_name'] ?? 'Sistema';
+        $ip = $_SERVER['REMOTE_ADDR'] ?? 'desconocida';
+        $fecha_hora = date('Y-m-d H:i:s'); // Hora local de Chile (America/Santiago)
+        $stmt = $pdo->prepare('INSERT INTO logs (fecha_hora, nombre_usuario, tipo, detalle, ip_host_cliente) VALUES (?, ?, ?, ?, ?)');
+        $stmt->execute([$fecha_hora, $usuario, $tipo, $detalle, $ip]);
+    } catch (\PDOException $e) {
+        // No interrumpimos la app si por algún motivo falla el registro del log
+    }
+}
+
 // --- PROCESAR ACCIONES CRUD ---
 
 // CREATE YO CAMBIE ESTO
@@ -55,7 +73,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'create') {
         $_POST['comentario'],
         $_SESSION['usuario_name'] // <-- Aquí se amarra el dueño de la reseña
     ]);
-    
+
+    $nuevo_id = $pdo->lastInsertId();
+    registrar_log($pdo, 'Crear registro', "Tabla: resenas | ID: $nuevo_id | Libro: " . $_POST['titulo_libro']);
+
     header("Location: index.php?section=create&success=1");
     exit;
 }
@@ -76,7 +97,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     // 3. Si pasa el filtro, recién ahí se actualiza
     $stmt = $pdo->prepare('UPDATE resenas SET titulo_libro = ?, autor = ?, calificacion = ?, comentario = ? WHERE id = ?');
     $stmt->execute([$_POST['titulo_libro'], $_POST['autor'], $_POST['calificacion'], $_POST['comentario'], $_POST['id']]);
-    
+
+    registrar_log($pdo, 'Modificar registro', "Tabla: resenas | ID: " . $_POST['id'] . " | Libro: " . $_POST['titulo_libro']);
+
     header("Location: index.php?section=update&id=" . $_POST['id'] . "&success=1");
     exit;
 }
@@ -97,7 +120,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete') {
     // 3. Si todo está en orden, se borra
     $stmt = $pdo->prepare('DELETE FROM resenas WHERE id = ?');
     $stmt->execute([$_POST['id']]);
-    
+
+    registrar_log($pdo, 'Eliminar registro', "Tabla: resenas | ID: " . $_POST['id'] . " | Libro: " . ($resena['titulo_libro'] ?? 'desconocido'));
+
     header("Location: index.php?section=read&deleted=1");
     exit;
 }

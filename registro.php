@@ -40,6 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ]);
                 $mensaje = "¡Usuario registrado con éxito! Ya puedes iniciar sesión.";
                 $tipo_mensaje = "success";
+
+                registrar_log($pdo, 'Creación de usuario', "Tabla: usuarios | Nuevo usuario: " . $username);
+                
+
             } catch (PDOException $e) {
                 // Captura el error real por si falta la tabla o la columna
                 $mensaje = "Error en la base de datos: " . $e->getMessage();
